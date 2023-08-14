@@ -29,22 +29,6 @@ headers = {
   'Authorization': 'Bearer '+key
 }
 
-#TO GET THE INVOCATION STATUS
-url = "https://kpmgukdev.api.identitynow.com/beta/trigger-invocations/status"
-
-payload={}
-response = requests.request("GET", url, headers=headers, data=payload)
-
-print(response.text)
-
-#TO GET EVENT TRIGGER DETAILS
-url = f'/identity-attributes-changed'
-conn.request("GET",url, payload, headers)
-res = conn.getresponse()
-data = res.read()
-json_dict = json.loads(data)
-print(json_dict)
-
 
 # REVOKE OR GRANT ACCESS
 
@@ -52,37 +36,24 @@ url = "https://sailpoint.api.identitynow.com/beta/access-requests"
 
 payload = json.dumps({
   "requestedFor": [
-    "<string>",
-    "<string>"
+    "2c91808883803e4b01838a209b5b291b"
   ],
+  "requestType": "GRANT_ACCESS",
   "requestedItems": [
     {
-      "id": "<string>",
-      "type": "<string>",
-      "comment": "<string>",
+      "type": "ENTITLEMENT",
+      "id": "2c9180835d2e5168015d32f890ca1581",
+      "comment": "Requesting access profile for John Doe",
       "clientMetadata": {
-        "aliquab10": "<string>",
-        "Ut58": "<string>",
-        "quis14b": "<string>",
-        "adipisicing5": "<string>"
+        "requestedAppName": "test-app",
+        "requestedAppId": "2c91808f7892918f0178b78da4a305a1"
       },
-      "removeDate": "<dateTime>"
-    },
-    {
-      "id": "<string>",
-      "type": "<string>",
-      "comment": "<string>",
-      "clientMetadata": {
-        "velit_c": "<string>"
-      },
-      "removeDate": "<dateTime>"
+      "removeDate": "2020-07-11T21:23:15.000Z"
     }
   ],
-  "requestType": "<string>",
   "clientMetadata": {
-    "voluptatea": "<string>",
-    "in_3": "<string>",
-    "in_e1e": "<string>"
+    "requestedAppId": "2c91808f7892918f0178b78da4a305a1",
+    "requestedAppName": "test-app"
   }
 })
 headers = {
