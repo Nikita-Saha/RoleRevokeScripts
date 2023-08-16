@@ -30,42 +30,6 @@ headers = {
 }
 
 
-# REVOKE OR GRANT ACCESS
-
-url = "https://sailpoint.api.identitynow.com/beta/access-requests"
-
-payload = json.dumps({
-  "requestedFor": [
-    "2c91808883803e4b01838a209b5b291b"
-  ],
-  "requestType": "GRANT_ACCESS",
-  "requestedItems": [
-    {
-      "type": "ENTITLEMENT",
-      "id": "2c9180835d2e5168015d32f890ca1581",
-      "comment": "Requesting access profile for John Doe",
-      "clientMetadata": {
-        "requestedAppName": "test-app",
-        "requestedAppId": "2c91808f7892918f0178b78da4a305a1"
-      },
-      "removeDate": "2020-07-11T21:23:15.000Z"
-    }
-  ],
-  "clientMetadata": {
-    "requestedAppId": "2c91808f7892918f0178b78da4a305a1",
-    "requestedAppName": "test-app"
-  }
-})
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json'
-}
-
-response = requests.request("POST", url, headers=headers, data=payload)
-
-print(response.text)
-
-
 #TO GET THE INVOCATION STATUS
 url = "https://kpmgukdev.api.identitynow.com/beta/trigger-invocations/status"
 
