@@ -35,7 +35,7 @@ url = "https://kpmgukdev.api.identitynow.com/beta/trigger-invocations/status"
 
 payload={}
 response = requests.request("GET", url, headers=headers, data=payload)
-
+print("printing response")
 print(response.text)
 
 
