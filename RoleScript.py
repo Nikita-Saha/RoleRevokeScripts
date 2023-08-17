@@ -30,12 +30,27 @@ headers = {
 }
 
 
-#TO GET THE INVOCATION STATUS
-url = "https://kpmgukdev.api.identitynow.com/beta/trigger-invocations/status"
+# REVOKE OR GRANT ACCESS
 
-payload={}
-response = requests.request("GET", url, headers=headers, data=payload)
+url = "/beta/access-requests"
+
+payload = json.dumps({
+  "requestedFor": [
+    "2c918088838059a201838a209b591f75"
+  ],
+  "requestType": "GRANT_ACCESS",
+  "requestedItems": [
+    {
+      "type": "ENTITLEMENT",
+      "id": "2c9180887e8e29e1017e8fe4d1ca3aa0",
+      "comment": "Requesting access profile for Nikita Saha",
+    }
+  ],
+})
+
+conn.request("POST", url, headers, payload)
 print("printing response")
 print(response.text)
+
 
 
