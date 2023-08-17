@@ -21,6 +21,7 @@ headers = {}
 conn.request("POST", f"/oauth/token?grant_type=client_credentials&client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}", payload, headers)
 res = conn.getresponse()
 data = res.read()
+print(data)
 json_dict = json.loads(data)
 key = json_dict['access_token']
 headers = {
