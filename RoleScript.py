@@ -20,7 +20,7 @@ payload = ''
 headers = {}
 
 
-conn.request("POST", f"/oauth/token?grant_type=client_credentials&client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}", payload, headers)
+conn.request("POST", f"/oauth/token?grant_type=client_credentials&client_id=cc0c97c0ea7e48538407a7ecf55415f8&client_secret=162ff3937a291535c8968d006b70faa90c3b6a83ad41d21d7ed2a1068209e415, payload, headers)
 res = conn.getresponse()
 data = res.read()
 print(data)
