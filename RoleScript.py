@@ -19,12 +19,17 @@ conn = http.client.HTTPSConnection(f"{URL}")
 payload = ''
 headers = {}
 
+url = "https://kpmguk.api.identitynow.com/oauth/token?grant_type=client_credentials&client_id=b0cdb6a4c128487480bc38c2893a1b87&client_secret=bfc4a1decd3ff70c06a322c2f3e93e950a6f4f8a4b0d70949c74091719a435fe"
 
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+'''
 conn.request("POST", f"/oauth/token?grant_type=client_credentials&client_id=cc0c97c0ea7e48538407a7ecf55415f8&client_secret=162ff3937a291535c8968d006b70faa90c3b6a83ad41d21d7ed2a1068209e415, payload, headers)
 res = conn.getresponse()
 data = res.read()
 print(data)
-
+'''
 json_dict = json.loads(data)
 key = json_dict['access_token']
 headers = {
