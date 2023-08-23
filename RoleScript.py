@@ -38,8 +38,6 @@ headers = {
 
 # REVOKE OR GRANT ACCESS
 
-url1 = "/beta/access-requests"
-
 payload = json.dumps({
   "requestedFor": [
     "2c918088838059a201838a209b591f75"
@@ -54,7 +52,7 @@ payload = json.dumps({
   ],
 })
 
-conn.request("POST", url1, headers, payload)
+conn.request("POST", "/beta/access-requests", headers, payload)
 res = conn.getresponse()
 data = res.read()
 print("printing response")
