@@ -6,28 +6,28 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 import re
-import requests
+from datetime import date
+from datetime import datetime
 
 CLIENT_ID = os.environ["client_id"]
 CLIENT_SECRET = os.environ["client_secret"]
 URL = os.environ["url"]
-conn = http.client.HTTPSConnection(f"{URL}")
+conn = http.client.HTTPSConnection("kpmgukdev.api.identitynow.com")
 
 
+print(sys.argv[8])
 #TO GET ACCESS TOKEN :-
 #-------------------------
+#url = "/oauth/token?grant_type=client_credentials&client_id=27d6fde9-91ca-4ec6-94d4-49d9b7faf107&client_secret=b8d4d865786ed856c749b6d99218db5e6c851b18f8f555b77b1fc3789b69ec6d"
 payload = ''
 headers = {}
-
-url = "/oauth/token?grant_type=client_credentials&client_id=b0cdb6a4c128487480bc38c2893a1b87&client_secret=bfc4a1decd3ff70c06a322c2f3e93e950a6f4f8a4b0d70949c74091719a435fe"
-
-conn.request("POST", url, payload, headers)
+conn.request("POST", f"/oauth/token?grant_type=client_credentials&client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}", payload, headers)
+#conn.request("POST", url, payload, headers)
 res = conn.getresponse()
 data = res.read()
-print("access token printing")
-print(data)
-
 json_dict = json.loads(data)
+print("printing access token")
+print(json_dict)
 key = json_dict['access_token']
 headers = {
   'Content-Type': 'application/json',
@@ -35,9 +35,10 @@ headers = {
   'Authorization': 'Bearer '+key
 }
 
+
 # REVOKE OR GRANT ACCESS
 
-url = "/beta/access-requests"
+url1 = "/beta/access-requests"
 
 payload = json.dumps({
   "requestedFor": [
@@ -53,7 +54,7 @@ payload = json.dumps({
   ],
 })
 
-conn.request("POST", url, headers, payload)
+conn.request("POST", url1, headers, payload)
 res = conn.getresponse()
 data = res.read()
 print("printing response")
