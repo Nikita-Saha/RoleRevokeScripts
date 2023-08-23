@@ -15,7 +15,7 @@ URL = os.environ["url"]
 conn = http.client.HTTPSConnection("kpmgukdev.api.identitynow.com")
 
 
-print(sys.argv[8])
+
 #TO GET ACCESS TOKEN :-
 #-------------------------
 #url = "/oauth/token?grant_type=client_credentials&client_id=27d6fde9-91ca-4ec6-94d4-49d9b7faf107&client_secret=b8d4d865786ed856c749b6d99218db5e6c851b18f8f555b77b1fc3789b69ec6d"
