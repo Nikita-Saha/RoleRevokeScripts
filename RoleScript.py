@@ -24,6 +24,11 @@ url = "https://kpmguk.api.identitynow.com/oauth/token?grant_type=client_credenti
 response = requests.request("POST", url, headers=headers, data=payload)
 
 print(response.text)
+
+data = response.read()
+
+print(data)
+
 '''
 conn.request("POST", f"/oauth/token?grant_type=client_credentials&client_id=cc0c97c0ea7e48538407a7ecf55415f8&client_secret=162ff3937a291535c8968d006b70faa90c3b6a83ad41d21d7ed2a1068209e415, payload, headers)
 res = conn.getresponse()
@@ -57,7 +62,7 @@ payload = json.dumps({
   ],
 })
 
-conn.request("POST", url, headers, payload)
+requests.request("POST", url, headers, payload)
 print("printing response")
 print(response.text)
 
