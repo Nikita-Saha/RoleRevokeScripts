@@ -47,7 +47,7 @@ payload = json.dumps({
     {
       "type": "ENTITLEMENT",
       "id": "2c9180887e8e29e1017e8fe4d1ca3aa0",
-      "comment": "Requesting access profile for Nikita Saha",
+      "comment": "Requesting entitlement for Nikita Saha",
     }
   ],
 })
