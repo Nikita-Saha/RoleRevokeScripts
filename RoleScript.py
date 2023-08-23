@@ -42,14 +42,16 @@ payload = json.dumps({
   "requestedFor": [
     "2c918088838059a201838a209b591f75"
   ],
-  "requestType": "GRANT_ACCESS",
   "requestedItems": [
     {
       "type": "ENTITLEMENT",
       "id": "2c9180887e8e29e1017e8fe4d1ca3aa0",
-      "comment": "Requesting entitlement for Nikita Saha",
+      "comment": "Requesting entitlement for Nikita Saha"
     }
+    
   ],
+   "requestType": "GRANT_ACCESS"
+  
 })
 
 conn.request("POST", "/beta/access-requests", headers, payload)
