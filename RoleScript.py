@@ -54,7 +54,7 @@ payload = json.dumps({
   
 })
 
-conn.request("POST", "/beta/access-requests", headers, payload)
+conn.request("POST", "/beta/access-requests",payload, headers)
 res = conn.getresponse()
 data = res.read()
 print("printing response")
