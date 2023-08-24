@@ -50,7 +50,7 @@ payload = json.dumps({
     }
     
   ],
-   "requestType": "GRANT_ACCESS"
+   "requestType": "REVOKE_ACCESS"
   
 })
 
