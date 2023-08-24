@@ -40,13 +40,13 @@ headers = {
 
 payload = json.dumps({
   "requestedFor": [
-    "2c918088838059a201838a209b591f75"
+    "2c91808884157ab201841d761d977526"
   ],
   "requestedItems": [
     {
-      "type": "ENTITLEMENT",
-      "id": "2c9180887e8e29e1017e8fe4d1ca3aa0",
-      "comment": "Requesting entitlement for Nikita Saha"
+      "type": "ACCESS_PROFILE",
+      "id": "50cce5d029bc47459349203cbcc0560f",
+      "comment": "Requesting access profile for Coupa user"
     }
     
   ],
