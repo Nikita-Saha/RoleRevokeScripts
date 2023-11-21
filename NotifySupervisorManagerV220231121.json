@@ -1,0 +1,112 @@
+{
+	"name": "Notify Supervisor Manager V2",
+	"description": "Notify Supervisor Manager of new Account Details for Joiner",
+	"modified": "2022-10-25T15:27:52.458891471Z",
+	"modifiedBy": null,
+	"definition": {
+		"start": "Get Identity",
+		"steps": {
+			"Compare Strings": {
+				"choiceList": [
+					{
+						"comparator": "StringEquals",
+						"nextStep": "success",
+						"variableA.$": "$.getIdentity.attributes.employeeType",
+						"variableB": "Permanent"
+					}
+				],
+				"defaultStep": "Compare Strings 1",
+				"description": "If Permanent, then not interested",
+				"type": "choice"
+			},
+			"Compare Strings 1": {
+				"choiceList": [
+					{
+						"comparator": "StringEquals",
+						"nextStep": "success",
+						"variableA.$": "$.getIdentity.attributes.contractorGroup",
+						"variableB": "Contingent Hire"
+					}
+				],
+				"defaultStep": "Get Identity 1",
+				"description": "If Contingent Hire managed then not interested",
+				"type": "choice"
+			},
+			"Compare Strings 2": {
+				"choiceList": [
+					{
+						"comparator": "StringMatches",
+						"nextStep": "Send Email",
+						"variableA.$": "$.getIdentity1.attributes.email",
+						"variableB": "kpmg.co.uk"
+					}
+				],
+				"defaultStep": "failure",
+				"description": "If Supervisor Email contains valid address then proceed, else stop",
+				"type": "choice"
+			},
+			"Get Identity": {
+				"actionId": "sp:get-identity",
+				"attributes": {
+					"id.$": "$.trigger.recipient.id"
+				},
+				"description": "Get the Joiners Details - Identity",
+				"nextStep": "Compare Strings",
+				"type": "action",
+				"versionNumber": 2
+			},
+			"Get Identity 1": {
+				"actionId": "sp:get-identity",
+				"attributes": {
+					"id.$": "$.getIdentity.managerRef.id"
+				},
+				"description": "Get the Supervisor Manager - Identity1",
+				"nextStep": "Compare Strings 2",
+				"type": "action",
+				"versionNumber": 2
+			},
+			"Send Email": {
+				"actionId": "sp:send-email",
+				"attributes": {
+					"body": "Dear ${manager},<br><p>A new Logon Account has been created for a new employee named <b style=\"\">${employee}</b> The account has been created with the following details:<br>Logon Name: ${employeeLogon}<br>Temporary Password: ${employeePassword}<br>Email Address: ${employeeEmail}</p><br><p>Thank you,<br> Your Access Team</p>",
+					"context": {
+						"employee.$": "$.getIdentity.attributes.firstname",
+						"employeeEmail.$": "$.getIdentity.attributes.email",
+						"employeeLogon.$": "$.getIdentity.attributes.networkName",
+						"employeePassword.$": "$.getIdentity.attributes.temporaryPassword",
+						"manager.$": "$.getIdentity1.attributes.firstname"
+					},
+					"recipientEmailList.$": "$.getIdentity1.attributes.email",
+					"subject": "New Account Created for {employee}"
+				},
+				"description": "Send notification of new account details to Supervisor",
+				"nextStep": "success 1",
+				"type": "action",
+				"versionNumber": 2
+			},
+			"failure": {
+				"description": null,
+				"failureName": "Failed to locate Email Address for Supervisor",
+				"type": "failure"
+			},
+			"success": {
+				"type": "success"
+			},
+			"success 1": {
+				"type": "success"
+			}
+		}
+	},
+	"creator": {
+		"type": "IDENTITY",
+		"id": "2c9180867f1fa98f017f21022417092f",
+		"name": "Adrian.Hannen"
+	},
+	"trigger": {
+		"type": "EVENT",
+		"attributes": {
+			"filter.$": "$[?($.sources == \"AD UK Standard Account\" && $.errors == null)]",
+			"id": "idn:post-provisioning"
+		}
+	}
+}
