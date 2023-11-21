@@ -1,0 +1,97 @@
+{
+	"name": "Template: Create and Activate a Certification Campaign",
+	"description": "Create and activate a certification campaign for every identity that has changed departments.",
+	"modified": "2022-09-07T01:24:30.262910588Z",
+	"modifiedBy": null,
+	"definition": {
+		"start": "Compare Strings",
+		"steps": {
+			"Activate Certification Campaign": {
+				"actionId": "sp:activate-campaign",
+				"attributes": {
+					"id.$": "$.createCertificationCampaign.id"
+				},
+				"description": "Activate the campaign we created.",
+				"nextStep": "Get Identity",
+				"type": "action",
+				"versionNumber": 1
+			},
+			"Compare Strings": {
+				"choiceList": [
+					{
+						"comparator": "StringMatches",
+						"nextStep": "Create Certification Campaign",
+						"variableA.$": "$.trigger.changes[?(@.attribute == \"department\")].attribute",
+						"variableB": "department"
+					}
+				],
+				"defaultStep": "success",
+				"description": "Only create the campaign for identities who change departments.  This doesn't look for a specific department.",
+				"type": "choice"
+			},
+			"Create Certification Campaign": {
+				"actionId": "sp:create-campaign",
+				"attributes": {
+					"duration": "2w",
+					"identityId.$": "$.trigger.identity.id",
+					"name.$": "$.trigger.identity.name"
+				},
+				"description": "Create an identity certification campaign any identity that changed departments.  Name it after the identity so we know who is being certified.",
+				"nextStep": "Activate Certification Campaign",
+				"type": "action",
+				"versionNumber": 1
+			},
+			"Get Identity": {
+				"actionId": "sp:get-identity",
+				"attributes": {
+					"id.$": "$.trigger.identity.id"
+				},
+				"description": "Get the identity's attributes so we can look up their manager.",
+				"nextStep": "Get Identity 1",
+				"type": "action",
+				"versionNumber": 1
+			},
+			"Get Identity 1": {
+				"actionId": "sp:get-identity",
+				"attributes": {
+					"id.$": "$.getIdentity.manager.id"
+				},
+				"description": "This node is used to gather information about the user's manager to populate their email.",
+				"nextStep": "Send Email 1",
+				"type": "action",
+				"versionNumber": 1
+			},
+			"Send Email 1": {
+				"actionId": "sp:send-email",
+				"attributes": {
+					"body.$": "$.trigger.identity.name",
+					"context": {},
+					"recipientEmailList.$": "$.getIdentity1.attributes.email",
+					"subject": "New certification campaign generated for your employee"
+				},
+				"description": "Send an email to the identity's manager so they know there is a certification campaign pending for their employee that they need to complete.",
+				"nextStep": "success 1",
+				"type": "action",
+				"versionNumber": 2
+			},
+			"success": {
+				"description": "Don't do anything else, since the identity didn't change departments.",
+				"type": "success"
+			},
+			"success 1": {
+				"type": "success"
+			}
+		}
+	},
+	"creator": {
+		"type": "IDENTITY",
+		"id": "2c9180847c5c48c4017c7445f83d6dd0",
+		"name": "Harish.G"
+	},
+	"trigger": {
+		"type": "EVENT",
+		"attributes": {
+			"id": "idn:identity-attributes-changed"
+		}
+	}
+}
